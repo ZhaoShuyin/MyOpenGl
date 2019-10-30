@@ -7,6 +7,7 @@
     <android.opengl.GLSurfaceView
         android:id="@+id/glv_main_demo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_margin="10dp" />
 
 </LinearLayout>

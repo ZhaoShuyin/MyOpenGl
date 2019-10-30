@@ -11,6 +11,11 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+/**
+ * @Title 基础渲染器Render
+ * @date 2019/10/29
+ * @autor Zsy
+ */
 public class MyRenderer implements GLSurfaceView.Renderer {
     private int program;
     private int vPosition;
