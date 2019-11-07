@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
      * https://blog.csdn.net/code09/article/details/41377847
      * 13.多层绘制
      * https://blog.csdn.net/u010462297/article/details/50589991
+     * 14.gl10方法解析
+     * https://www.cnblogs.com/Anita9002/p/4476341.html
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
