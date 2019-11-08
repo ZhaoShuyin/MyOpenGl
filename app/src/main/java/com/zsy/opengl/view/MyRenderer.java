@@ -21,7 +21,6 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import serial.jni.DrawUtils;
-import serial.jni.GLView;
 
 public class MyRenderer implements Renderer {
     private GLJNILIB gljni;

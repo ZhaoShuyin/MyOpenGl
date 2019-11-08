@@ -13,7 +13,7 @@ import serial.jni.BackgroundUtils;
 
 public class GLView extends GLSurfaceView {
     public static Handler msg = null;
-    public static boolean isGather = false;
+    public static boolean isGather = true;//
     private static boolean isRenderer = false;
     private MyRenderer myRenderer;
     private int vWidth;

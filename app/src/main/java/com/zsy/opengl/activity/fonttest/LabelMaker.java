@@ -314,11 +314,6 @@ public class LabelMaker {
     /**
      * Draw a given label at a given x,y position, expressed in pixels, with the
      * lower-left-hand-corner of the view being (0,0).
-     *
-     * @param gl
-     * @param x
-     * @param y
-     * @param labelID
      */
     public void draw(GL10 gl, float x, float y, int labelID) {
         checkState(STATE_DRAWING, STATE_DRAWING);
