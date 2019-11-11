@@ -27,6 +27,28 @@ import javax.microedition.khronos.opengles.GL10;
 import serial.jni.DrawUtils;
 
 public class MyRendererTest implements Renderer {
+
+    private static float ScaleFactor = 1.0F;
+    private static float unit = 0.41F;
+    //    private static float revise_Y = 0.65F;
+    private static float fHeight = 0.6F;
+
+    public static float[] coord;
+
+    public static float[] vertex_1;
+    public static float[] vertex_2;
+    public static float[] vertex_3;
+    public static float[] vertex_aVR;
+    public static float[] vertex_aVL;
+    public static float[] vertex_aVF;
+    public static float[] vertex_V1;
+    public static float[] vertex_V2;
+    public static float[] vertex_V3;
+    public static float[] vertex_V4;
+    public static float[] vertex_V5;
+    public static float[] vertex_V6;
+
+
     private GLJNILIB gljni;
     private int glWidth;
     private int glHeight;
@@ -43,12 +65,12 @@ public class MyRendererTest implements Renderer {
     private float DX62;
     private float CX62;
     private final float unit12 = 0.4F;
-    private float xunit = DrawUtils.getDisplaySpeed();
-    private float mSpeed = DrawUtils.getDisplaySpeed();
-    private float scale = DrawUtils.getDisplayGain();
-    private float mScale = DrawUtils.getDisplayGain();
-    private float scaleVx = DrawUtils.getDisplayGainVx();
-    private float mScaleVx = DrawUtils.getDisplayGainVx();
+    private float xunit = 0.014F;
+    private float mSpeed = 0.014F;
+    private float scale = 5.55E-4F;
+    private float mScale = 5.55E-4F;
+    private float scaleVx = 5.55E-4F;
+    private float mScaleVx = 5.55E-4F;
     private final float revise_Y = 0.4F;
     private final float revise_YY = 0.35F;
     private short[] temp = new short[72];
@@ -58,9 +80,6 @@ public class MyRendererTest implements Renderer {
     private float DX621;
     private float CX621;
     private int RhythmIndex;
-    private float[] rect621;
-    private float[] rect621c;
-    private float[] lead621;
     private float[] lead;
     private int[] textures;
     private FloatBuffer vertexBuffer;
@@ -85,9 +104,6 @@ public class MyRendererTest implements Renderer {
     public MyRendererTest() {
         this.rect = new float[]{-6.0F * this.xunit, 6.0F, 6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, -6.0F};
         this.RhythmIndex = 0;
-        this.rect621 = new float[]{-6.0F * this.xunit, 6.0F, 6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -3.5F, -6.0F * this.xunit, 6.0F, 6.0F * this.xunit, -3.5F, -6.0F * this.xunit, -3.5F};
-        this.rect621c = new float[]{-6.0F * this.xunit, -3.5F, 6.0F * this.xunit, -3.5F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, -3.5F, 6.0F * this.xunit, -6.0F, -6.0F * this.xunit, -6.0F};
-        this.lead621 = new float[]{-3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F};
         this.lead = new float[]{-3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F, -3.0F * this.xunit, 0.0F, -2.0F * this.xunit, 0.0F, -this.xunit, 0.0F, 0.0F, 0.0F, this.xunit, 0.0F, 2.0F * this.xunit, 0.0F, 3.0F * this.xunit, 0.0F};
         this.textures = new int[1];
         this.leadString = new String[]{"Ⅰ", "Ⅱ", "Ⅲ", "aVR", "aVL", "aVF", "V1", "V2", "V3", "V4", "V5", "V6"};
@@ -97,8 +113,24 @@ public class MyRendererTest implements Renderer {
         this.colorBLUE = 0.2F;
         this.colorALPHA = 1.0F;
         this.leadTextures = new int[12];
-        this.leadVertex = new float[][]{DrawUtils.vertex_1, DrawUtils.vertex_2, DrawUtils.vertex_3, DrawUtils.vertex_aVR, DrawUtils.vertex_aVL, DrawUtils.vertex_aVF, DrawUtils.vertex_V1, DrawUtils.vertex_V2, DrawUtils.vertex_V3, DrawUtils.vertex_V4, DrawUtils.vertex_V5, DrawUtils.vertex_V6};
+        this.leadVertex = new float[][]{vertex_1, vertex_2, vertex_3, vertex_aVR, vertex_aVL, vertex_aVF, vertex_V1, vertex_V2, vertex_V3, vertex_V4, vertex_V5, vertex_V6};
         this.IsClearScreen = false;
+
+        coord = new float[]{0.0F, ScaleFactor * 1.0F, 1.0F, 1.0F, 0.0F, 0.0F, 1.0F, 0.0F};
+
+        vertex_1 = new float[]{-10.5F, 11.0F * unit - revise_Y, 0.0F, -9.5F, 11.0F * unit - revise_Y, 0.0F, -10.5F, 11.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, 11.0F * unit - revise_Y + fHeight, 0.0F};
+        vertex_2 = new float[]{-10.5F, 9.0F * unit - revise_Y, 0.0F, -9.5F, 9.0F * unit - revise_Y, 0.0F, -10.5F, 9.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, 9.0F * unit - revise_Y + fHeight, 0.0F};
+        vertex_3 = new float[]{-10.5F, 7.0F * unit - revise_Y, 0.0F, -9.5F, 7.0F * unit - revise_Y, 0.0F, -10.5F, 7.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, 7.0F * unit - revise_Y + fHeight, 0.0F};
+        vertex_aVR = new float[]{-10.5F, 5.0F * unit - revise_Y, 0.0F, -9.5F, 5.0F * unit - revise_Y, 0.0F, -10.5F, 5.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, 5.0F * unit - revise_Y + fHeight, 0.0F};
+        vertex_aVL = new float[]{-10.5F, 3.0F * unit - revise_Y, 0.0F, -9.5F, 3.0F * unit - revise_Y, 0.0F, -10.5F, 3.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, 3.0F * unit - revise_Y + fHeight, 0.0F};
+        vertex_aVF = new float[]{-10.5F, unit - revise_Y, 0.0F, -9.5F, unit - revise_Y, 0.0F, -10.5F, unit - revise_Y + fHeight, 0.0F, -9.5F, unit - revise_Y + fHeight, 0.0F};
+        vertex_V1 = new float[]{-10.5F, -unit - revise_Y, 0.0F, -9.5F, -unit - revise_Y, 0.0F, -10.5F, -unit - revise_Y + fHeight, 0.0F, -9.5F, -unit - revise_Y + fHeight, 0.0F};
+        vertex_V2 = new float[]{-10.5F, -3.0F * unit - revise_Y, 0.0F, -9.5F, -3.0F * unit - revise_Y, 0.0F, -10.5F, -3.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, -3.0F * unit - revise_Y + fHeight, 0.0F};
+        vertex_V3 = new float[]{-10.5F, -5.0F * unit - revise_Y, 0.0F, -9.5F, -5.0F * unit - revise_Y, 0.0F, -10.5F, -5.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, -5.0F * unit - revise_Y + fHeight, 0.0F};
+        vertex_V4 = new float[]{-10.5F, -7.0F * unit - revise_Y, 0.0F, -9.5F, -7.0F * unit - revise_Y, 0.0F, -10.5F, -7.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, -7.0F * unit - revise_Y + fHeight, 0.0F};
+        vertex_V5 = new float[]{-10.5F, -9.0F * unit - revise_Y, 0.0F, -9.5F, -9.0F * unit - revise_Y, 0.0F, -10.5F, -9.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, -9.0F * unit - revise_Y + fHeight, 0.0F};
+        vertex_V6 = new float[]{-10.5F, -11.0F * unit - revise_Y, 0.0F, -9.5F, -11.0F * unit - revise_Y, 0.0F, -10.5F, -11.0F * unit - revise_Y + fHeight, 0.0F, -9.5F, -11.0F * unit - revise_Y + fHeight, 0.0F};
+
     }
 
     public void DrawFont(GL10 gl, float[] vertex, String leadString, int index) {
@@ -116,10 +148,10 @@ public class MyRendererTest implements Renderer {
         this.vertexBuffer = bb.asFloatBuffer();
         this.vertexBuffer.put(vertex);
         this.vertexBuffer.position(0);
-        ByteBuffer coordbb = ByteBuffer.allocateDirect(DrawUtils.coord.length * 4);
+        ByteBuffer coordbb = ByteBuffer.allocateDirect(coord.length * 4);
         coordbb.order(ByteOrder.nativeOrder());
         this.coordBuffer = coordbb.asFloatBuffer();
-        this.coordBuffer.put(DrawUtils.coord);
+        this.coordBuffer.put(coord);
         this.coordBuffer.position(0);
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
@@ -150,18 +182,18 @@ public class MyRendererTest implements Renderer {
                         gl.glClear(GL10.GL_DEPTH_BUFFER_BIT | GL10.GL_COLOR_BUFFER_BIT);
                         this.DX = -9.0F;
                         this.CX = -8.6F;
-                        this.DrawFont(gl, DrawUtils.vertex_1, this.leadString[0], 0);
-                        this.DrawFont(gl, DrawUtils.vertex_2, this.leadString[1], 1);
-                        this.DrawFont(gl, DrawUtils.vertex_3, this.leadString[2], 2);
-                        this.DrawFont(gl, DrawUtils.vertex_aVR, this.leadString[3], 3);
-                        this.DrawFont(gl, DrawUtils.vertex_aVL, this.leadString[4], 4);
-                        this.DrawFont(gl, DrawUtils.vertex_aVF, this.leadString[5], 5);
-                        this.DrawFont(gl, DrawUtils.vertex_V1, this.leadString[6], 6);
-                        this.DrawFont(gl, DrawUtils.vertex_V2, this.leadString[7], 7);
-                        this.DrawFont(gl, DrawUtils.vertex_V3, this.leadString[8], 8);
-                        this.DrawFont(gl, DrawUtils.vertex_V4, this.leadString[9], 9);
-                        this.DrawFont(gl, DrawUtils.vertex_V5, this.leadString[10], 10);
-                        this.DrawFont(gl, DrawUtils.vertex_V6, this.leadString[11], 11);
+                        this.DrawFont(gl, vertex_1, this.leadString[0], 0);
+                        this.DrawFont(gl, vertex_2, this.leadString[1], 1);
+                        this.DrawFont(gl, vertex_3, this.leadString[2], 2);
+                        this.DrawFont(gl, vertex_aVR, this.leadString[3], 3);
+                        this.DrawFont(gl, vertex_aVL, this.leadString[4], 4);
+                        this.DrawFont(gl, vertex_aVF, this.leadString[5], 5);
+                        this.DrawFont(gl, vertex_V1, this.leadString[6], 6);
+                        this.DrawFont(gl, vertex_V2, this.leadString[7], 7);
+                        this.DrawFont(gl, vertex_V3, this.leadString[8], 8);
+                        this.DrawFont(gl, vertex_V4, this.leadString[9], 9);
+                        this.DrawFont(gl, vertex_V5, this.leadString[10], 10);
+                        this.DrawFont(gl, vertex_V6, this.leadString[11], 11);
                         this.IsDrawFont = Boolean.valueOf(false);
                         this.IsClearScreen = false;
                     }
@@ -301,6 +333,11 @@ public class MyRendererTest implements Renderer {
     private void getEcgData() {
         int index = 0;
         while (index < 6 && this.isEcgQueue) {
+            Short aShort = Short.valueOf(index + "");
+            for (int i = 0; i < 12; i++) {
+                this.temp[12 * index + i] = aShort.shortValue();
+            }
+           /* this.temp[12 * index + i] = val.shortValue();
             if (this.mEcgQueue != null && !this.mEcgQueue.isEmpty()) {
                 for (int i = 0; i < 12 && this.isEcgQueue; ++i) {
                     Short val = (Short) this.mEcgQueue.poll();
@@ -313,7 +350,7 @@ public class MyRendererTest implements Renderer {
                 ++index;
             } else if (this.mEcgQueue == null) {
                 break;
-            }
+            }*/
         }
 
     }
@@ -333,30 +370,12 @@ public class MyRendererTest implements Renderer {
             this.lead[12 + i] = 3.0F * this.xunit;
         }
 
-        this.lead621[0] = -3.0F * this.xunit;
-        this.lead621[2] = -2.0F * this.xunit;
-        this.lead621[4] = -this.xunit;
-        this.lead621[8] = this.xunit;
-        this.lead621[10] = 2.0F * this.xunit;
-        this.lead621[12] = 3.0F * this.xunit;
         this.rect[0] = -6.0F * this.xunit;
         this.rect[2] = 6.0F * this.xunit;
         this.rect[4] = 6.0F * this.xunit;
         this.rect[6] = -6.0F * this.xunit;
         this.rect[8] = 6.0F * this.xunit;
         this.rect[10] = -6.0F * this.xunit;
-        this.rect621[0] = -6.0F * this.xunit;
-        this.rect621[2] = 6.0F * this.xunit;
-        this.rect621[4] = 6.0F * this.xunit;
-        this.rect621[6] = -6.0F * this.xunit;
-        this.rect621[8] = 6.0F * this.xunit;
-        this.rect621[10] = -6.0F * this.xunit;
-        this.rect621c[0] = -6.0F * this.xunit;
-        this.rect621c[2] = 6.0F * this.xunit;
-        this.rect621c[4] = 6.0F * this.xunit;
-        this.rect621c[6] = -6.0F * this.xunit;
-        this.rect621c[8] = 6.0F * this.xunit;
-        this.rect621c[10] = -6.0F * this.xunit;
     }
 
     /**
@@ -367,7 +386,7 @@ public class MyRendererTest implements Renderer {
         gl.glTranslatef(this.CX, 0.0F, -5.0F);
         gl.glRotatef(0.0F, 1.0F, 0.0F, 0.0F);
         gl.glColor4f(0.0F, 0.0F, 0.0F, 0.0F);
-        FloatBuffer verBuffer = DrawUtils.makeFloatBuffer(this.rect);
+        FloatBuffer verBuffer = makeFloatBuffer(this.rect);
         gl.glVertexPointer(2, 5126, 0, verBuffer);
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glDrawArrays(4, 0, 3);
@@ -388,7 +407,7 @@ public class MyRendererTest implements Renderer {
         gl.glTranslatef(this.DX, 0.0F, -5.0F);
         gl.glRotatef(0.0F, 1.0F, 0.0F, 0.0F);
         gl.glColor4f(this.colorRED, this.colorGREEN, this.colorBLUE, this.colorALPHA);
-        FloatBuffer verBuffer = DrawUtils.makeFloatBuffer(this.lead);
+        FloatBuffer verBuffer = makeFloatBuffer(this.lead);
         //单元长度 2 ,
         gl.glVertexPointer(2, GL10.GL_FLOAT, 0, verBuffer);
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
@@ -412,11 +431,10 @@ public class MyRendererTest implements Renderer {
         if (this.DX >= 10.12F) {
             this.DX = -9.0F;
         }
-
     }
 
     public void onSurfaceChanged(GL10 gl, int width, int height) {
-        this.onSet(gl);
+//        this.onSet(gl);
         String vendor = gl.glGetString(GL10.GL_VENDOR);
         if (vendor.equals("Qualcomm")) {
             this.IsQualcomm = true;
@@ -472,8 +490,7 @@ public class MyRendererTest implements Renderer {
 
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
         this.IsDrawFont = Boolean.valueOf(true);
-        gl.glClear(GL10.GL_DEPTH_BUFFER_BIT | GL10.GL_COLOR_BUFFER_BIT);
-        Log.e("MyRenderer", "onSurfaceCreated");
+//        gl.glClear(GL10.GL_DEPTH_BUFFER_BIT | GL10.GL_COLOR_BUFFER_BIT);
         gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
         gl.glShadeModel(GL10.GL_SMOOTH);
         gl.glClearColor(0.0F, 0.0F, 0.0F, 0.0F);
@@ -499,57 +516,22 @@ public class MyRendererTest implements Renderer {
         gl.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
     }
 
-    private void initFontTextures(GL10 gl) {
-        Bitmap[] leadBitmap = new Bitmap[12];
-        this.mVertexBuffer = new FloatBuffer[12];
-        this.mCoordBuffer = new FloatBuffer[12];
-        gl.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        gl.glEnable(GL10.GL_TEXTURE_2D);
-        gl.glGenTextures(12, this.leadTextures, 0);
 
-        for (int i = 0; i < 12; ++i) {
-            leadBitmap[i] = DrawUtils.initFontBitmap(this.leadString[i], i);
-            gl.glBindTexture(GL10.GL_TEXTURE_2D, this.leadTextures[i]);
-            GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, leadBitmap[i], 0);
-            gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_LINEAR);
-            gl.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_LINEAR);
-            if (leadBitmap[i] != null && !leadBitmap[i].isRecycled()) {
-                leadBitmap[i].recycle();
-                leadBitmap[i] = null;
-            }
-        }
-
+    public static FloatBuffer makeFloatBuffer(float[] arr) {
+        ByteBuffer bb = ByteBuffer.allocateDirect(arr.length * 4);
+        bb.order(ByteOrder.nativeOrder());
+        FloatBuffer fb = bb.asFloatBuffer();
+        fb.put(arr);
+        fb.position(0);
+        return fb;
     }
-
-    private void drawFontTextures(GL10 gl) {
-        gl.glLoadIdentity();
-        gl.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-        gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-        gl.glTranslatef(0.0F, 0.0F, -5.1F);
-
-        for (int i = 0; i < 12; ++i) {
-            gl.glBindTexture(GL10.GL_TEXTURE_2D, this.leadTextures[i]);
-            this.mVertexBuffer[i] = DrawUtils.makeFloatBuffer(this.leadVertex[i]);
-            this.mCoordBuffer[i] = DrawUtils.makeFloatBuffer(DrawUtils.coord);
-            gl.glVertexPointer(3, 5126, 0, this.mVertexBuffer[i]);
-            gl.glTexCoordPointer(2, 5126, 0, this.mCoordBuffer[i]);
-            gl.glDrawArrays(5, 0, 4);
-        }
-
-        gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-        gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
-        gl.glDisable(GL10.GL_TEXTURE_2D);
-        gl.glFinish();
-    }
-
 
     public static Bitmap initFontBitmap(String font, int index) {
         Bitmap bitmap = Bitmap.createBitmap(64, 64, Bitmap.Config.ARGB_4444);
         Canvas canvas = new Canvas(bitmap);
         canvas.drawColor(0);
         Paint p = new Paint();
-        Typeface typeface = Typeface.create(Typeface.MONOSPACE, 1);
+        Typeface typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD);
         p.setAntiAlias(true);
         if (index % 3 == 0) {
             p.setColor(Color.argb(255, 144, 206, 245));

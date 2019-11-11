@@ -4,9 +4,8 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 
-import com.zsy.opengl.render10.font.FontRender;
-import com.zsy.opengl.render10.font.FontRenderer;
-import com.zsy.opengl.view.MyRenderer;
+import com.zsy.opengl.render10.coordinate.CoordinateRender;
+import com.zsy.opengl.render10.projection.ProjectionRender;
 
 /**
  * @Title com.zsy.opengl.view10
@@ -21,7 +20,7 @@ public class FontViewA extends GLSurfaceView {
 
     public FontViewA(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setRenderer(new MyRenderer());
+        setRenderer(new CoordinateRender());
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 }

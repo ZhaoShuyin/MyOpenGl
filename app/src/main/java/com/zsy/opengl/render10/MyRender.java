@@ -10,6 +10,9 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+/**
+ *
+ */
 public class MyRender implements GLSurfaceView.Renderer {
 
     private String TAG = "ZGLSurView";
@@ -43,7 +46,7 @@ public class MyRender implements GLSurfaceView.Renderer {
 
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glLoadIdentity();
-//        gl.glTranslatef(-1.5f, 0.0f, 0.0f);
+        gl.glTranslatef(-0.0f, 0.0f, -1.0f);
         gl.glVertexPointer(2, GL10.GL_FLOAT, 0, floatBuffer);
 
         gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, floats.length / 2);
@@ -122,6 +125,7 @@ public class MyRender implements GLSurfaceView.Renderer {
 //        gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
 
         init();
+
     }
 
     @Override
@@ -148,7 +152,7 @@ public class MyRender implements GLSurfaceView.Renderer {
          *设置投影视角
          */
         float ratio = (float) width / height;
-        gl.glFrustumf(-ratio, ratio, -1, 1, 1, 10);
+        gl.glFrustumf(-ratio, ratio, -1, 1, 1, 5);
         /**
          * 设置渲染模式 (折线 GL_LINE_STRIP)
          */
